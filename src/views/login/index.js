@@ -1,59 +1,46 @@
 import React, { Component } from 'react'
-import { Form, Input, Button, Checkbox } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './index.css'
 
+//组件
+import LoginFrom from './LoginFrom'
+import ReloginFrom from './reloginFrom'
+
 export default class index extends Component {
-  render() {
-    return (
-      <div className='boxWrap'>
-          <div className='loginWrap'>
-                <div className='title'>
-                    <span>登录</span>
-                    <span>账号注册</span>
+    constructor () {
+        super ()
+        this.state = {
+            type: 'login'
+        }
+    }
+    // 去注册
+    toRelogin = () => {
+       this.setState({
+          type: 'relogin'
+       })
+    }
+    // 去登录
+    tologin = () => {
+        this.setState({
+            type: 'login'
+         })        
+    }
+      
+    render() {
+        const { type } = this.state
+        return (
+            <div className='boxWrap'>
+                <div className='loginWrap'>
+                    <div className='title'>
+                        <span onClick={this.tologin}>登录</span>
+                        <span onClick={this.toRelogin}>账号注册</span>
+                    </div>
+                    <div className='formBox'>
+                        {
+                            type==='login'? <LoginFrom />:<ReloginFrom />
+                        }                      
+                    </div>
                 </div>
-                <div className='formBox'>
-                    <Form
-                        name="normal_login"
-                        className="login-form"
-                        initialValues={{ remember: true }}>
-                        <Form.Item
-                            name="username"
-                            rules={[{ required: true, message: 'Please input your Username!' }]}>
-                            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-                        </Form.Item>
-                        <Form.Item
-                            name="password"
-                            rules={[{ required: true, message: 'Please input your Password!' }]}>
-                            <Input
-                            prefix={<LockOutlined className="site-form-item-icon" />}
-                            type="password"
-                            placeholder="Password"
-                            />
-                        </Form.Item>
-                        <Form.Item
-                            name="password"
-                            rules={[{ required: true, message: '' }]}>
-                            <div className='yanzhengma'>
-                                <Input
-                                    prefix={<LockOutlined className="site-form-item-icon" />}
-                                    type="password"
-                                    placeholder="Password"
-                                />
-                                <span className='yanzhengBox'>获取验证码</span>
-                            </div>
-                        </Form.Item>
-
-                        <Form.Item>
-                            <Button type="primary" htmlType="submit" className="login-form-button">
-                               登录
-                            </Button>
-                        </Form.Item>
-                    </Form>
-                </div>
-
-          </div>
-      </div>
-    )
-  }
+            </div>
+        )
+    }
 }
